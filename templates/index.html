@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>PolyglotLab — Traductor</title>
+
+  <!-- Fuentes y CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+
+<body>
+
+  <!-- Decoracion del fondo difuminado -->
+  <div class="blob blob--1" aria-hidden="true"></div>
+  <div class="blob blob--2" aria-hidden="true"></div>
+
+  <div class="wrapper">
+
+    <!-- HEADER -->
+    <header class="header">
+      <a class="logo" href="#" aria-label="PolyglotLab inicio">
+        <div class="logo__icon" aria-hidden="true">🌐</div>
+        <span class="logo__text">Polyglot<span class="logo__accent">Lab</span></span>
+      </a>
+
+      <div class="header__right">
+        <!-- Boton seleccion de tema -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
+          <svg class="theme-icon theme-icon--sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-icon theme-icon--moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <span class="badge">PORTFOLIO PROJECT</span>
+      </div>
+
+    </header>
+
+    <!-- HERO (titulo destacado) -->
+    <section class="hero" aria-label="Encabezado">
+      <h2 class="hero__title">Translate without <em>limits</em></h2>
+      <p class="hero__subtitle">Fluid and instant translations by Martín Sogoloff</p>
+    </section>
+
+    <!-- Bandejas de traduccion -->
+    <main class="card" aria-label="Traductor">
+
+      <!-- Barra de seleccion de lenguaje -->
+      <div class="lang-bar" role="toolbar" aria-label="Selección de idiomas">
+
+        <!-- Cascada de lenguaje de origen -->
+        <div class="dropdown" id="srcDropdown">
+          <button class="dropdown-trigger" id="srcTrigger" aria-haspopup="true" aria-expanded="false">
+            <span class="dropdown-label" id="srcLabel">🔍 Detect language</span>
+            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="srcMenu" role="menu">
+            <button class="dropdown-item" data-lang="auto" data-flag="🔍" role="menuitem">🔍 Detectar idioma</button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item" data-lang="Spanish" data-flag="🇪🇸" role="menuitem">🇪🇸 Español</button>
+            <button class="dropdown-item" data-lang="English" data-flag="🇬🇧" role="menuitem">🇬🇧 Inglés</button>
+            <button class="dropdown-item" data-lang="French" data-flag="🇫🇷" role="menuitem">🇫🇷 Francés</button>
+            <button class="dropdown-item" data-lang="Portuguese" data-flag="🇵🇹" role="menuitem">🇵🇹 Portugués</button>
+            <button class="dropdown-item" data-lang="German" data-flag="🇩🇪" role="menuitem">🇩🇪 Alemán</button>
+            <button class="dropdown-item" data-lang="Italian" data-flag="🇮🇹" role="menuitem">🇮🇹 Italiano</button>
+            <button class="dropdown-item" data-lang="Japanese" data-flag="🇯🇵" role="menuitem">🇯🇵 Japonés</button>
+            <button class="dropdown-item" data-lang="Chinese" data-flag="🇨🇳" role="menuitem">🇨🇳 Chino</button>
+            <button class="dropdown-item" data-lang="Arabic" data-flag="🇸🇦" role="menuitem">🇸🇦 Árabe</button>
+          </div>
+        </div>
+
+        <!-- Boton invertir lenguajes -->
+        <button class="swap-btn" id="swapBtn" title="Intercambiar idiomas" aria-label="Intercambiar idiomas">⇄</button>
+
+        <!-- Cascada de lenguaje a traducir -->
+        <div class="dropdown" id="tgtDropdown">
+          <button class="dropdown-trigger" id="tgtTrigger" aria-haspopup="true" aria-expanded="false">
+            <span class="dropdown-label" id="tgtLabel">🇬🇧 Inglés</span>
+            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="tgtMenu" role="menu">
+            <button class="dropdown-item" data-lang="English" data-flag="🇬🇧" role="menuitem">🇬🇧 Inglés</button>
+            <button class="dropdown-item" data-lang="Spanish" data-flag="🇪🇸" role="menuitem">🇪🇸 Español</button>
+            <button class="dropdown-item" data-lang="French" data-flag="🇫🇷" role="menuitem">🇫🇷 Francés</button>
+            <button class="dropdown-item" data-lang="Portuguese" data-flag="🇵🇹" role="menuitem">🇵🇹 Portugués</button>
+            <button class="dropdown-item" data-lang="German" data-flag="🇩🇪" role="menuitem">🇩🇪 Alemán</button>
+            <button class="dropdown-item" data-lang="Italian" data-flag="🇮🇹" role="menuitem">🇮🇹 Italiano</button>
+            <button class="dropdown-item" data-lang="Japanese" data-flag="🇯🇵" role="menuitem">🇯🇵 Japonés</button>
+            <button class="dropdown-item" data-lang="Chinese" data-flag="🇨🇳" role="menuitem">🇨🇳 Chino</button>
+            <button class="dropdown-item" data-lang="Arabic" data-flag="🇸🇦" role="menuitem">🇸🇦 Árabe</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Paneles de texto -->
+      <div class="panels">
+
+        <!-- Panel del input -->
+        <div class="panel panel--input">
+          <textarea
+            class="panel__textarea"
+            id="inputText"
+            placeholder="Write or paste the text here"
+            maxlength="5000"
+            autofocus
+            aria-label="Texto de entrada"
+          ></textarea>
+          <div class="panel__footer">
+            <span class="char-count">
+              <span id="charCount">0</span> / 5000
+            </span>
+            <div class="panel__actions">
+              <button class="icon-btn" id="clearBtn" title="Delete text" aria-label="Borrar texto">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+              <button class="icon-btn" id="pasteBtn" title="Paste from clipboard" aria-label="Pegar texto">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M17 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="9" y="2" width="6" height="4" rx="1" ry="1"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divisor -->
+        <div class="panels__divider" aria-hidden="true"></div>
+
+        <!-- Panel del output -->
+        <div class="panel panel--output">
+          <div class="panel__output" id="outputBox" aria-live="polite" aria-label="Traducción">
+            <p class="panel__placeholder" id="outputPlaceholder">The translation will appear here…</p>
+            <p class="panel__result"  id="outputText"></p>
+            <div class="loading-bar" id="loadingBar" aria-hidden="true"></div>
+          </div>
+          <div class="panel__footer">
+            <span class="char-count" id="outputCount">—</span>
+            <div class="panel__actions">
+              <button class="icon-btn" id="copyBtn" title="Copy translation" aria-label="Copiar traducción">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+              <button class="icon-btn" id="speakBtn" title="Listen to translation" aria-label="Escuchar traducción">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Boton de traducir -->
+      <div class="translate-wrap">
+        <button class="translate-btn" id="translateBtn" aria-label="Traducir texto">
+          <div class="translate-btn__spinner" aria-hidden="true"></div>
+          <span class="translate-btn__icon" aria-hidden="true">✦</span>
+          <span id="btnLabel">Translate</span>
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Keyboard shortcuts -->
+    <p class="hint">
+      Key Shortcut: <kbd>Ctrl</kbd> + <kbd>Enter</kbd>
+    </p>
+
+    <!-- Frases rapidas -->
+    <section class="quick-section" aria-label="Frases rápidas">
+      <p class="quick-section__title">Quick phrases</p>
+      <div class="quick-pills" id="quickPills" role="list">
+        <button class="pill" role="listitem">How are you?</button>
+        <button class="pill" role="listitem">Good morning</button>
+        <button class="pill" role="listitem">Thank you!</button>
+        <button class="pill" role="listitem">Where is the bathroom?</button>
+        <button class="pill" role="listitem">My name is …</button>
+        <button class="pill" role="listitem">I do not understand</button>
+        <button class="pill" role="listitem">Do you speak english?</button>
+        <button class="pill" role="listitem">Please, help me</button>
+      </div>
+    </section>
+
+    <!-- Notificaciones -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      Made with ❤ using <strong>Python</strong> + <strong>deep-translator</strong> + <strong>Flask</strong>
+    </footer>
+
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
