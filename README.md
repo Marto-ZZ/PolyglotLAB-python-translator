@@ -102,3 +102,5 @@ Abrí `index.html` en tu navegador directamente, o usá una extensión como **Li
 | Frontend  | HTML5, CSS3, JavaScript           |
 | Backend   | Python 3, Flask, flask-cors       |
 | Traducción| deep-translator (GoogleTranslator)|
+
+## Desarrollado con ❤️ por Martín Sogoloff
