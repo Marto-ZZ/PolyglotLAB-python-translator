@@ -1,6 +1,6 @@
 # 🌐 Polyglot-Lab — Traductor Web
 
-Proyecto portfolio: traductor web estilo Google Translate, con frontend en **HTML/CSS/JS** y backend en **Python/ Flask/deep-translator**.
+Proyecto portfolio: traductor web estilo Google Translate, con frontend en **HTML/CSS/JS** y backend en **Python/Flask/deep-translator**.
 
 ---
 
