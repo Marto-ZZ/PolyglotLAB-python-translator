@@ -4,9 +4,9 @@
   padding: 0;
 }
 
-/* ── Design tokens ── */
+/* Paleta de colores y variables globales */
 :root {
-  /* Dark theme (default) */
+  /* Tema oscuro (default) */
   --bg:           #0d0f14;
   --surface:      #13161e;
   --surface-2:    #1a1e2a;
@@ -32,7 +32,7 @@
   --transition-med:  .25s ease;
 }
 
-/* Light theme */
+/* Tema claro */
 [data-theme="light"] {
   --bg:           #f5f7fa;
   --surface:      #ffffff;
@@ -51,7 +51,7 @@
   --shadow-btn-hover: 0 6px 30px rgba(79, 122, 255, .35);
 }
 
-/* ── Global ── */
+/* Global */
 html, body {
   height: 100%;
   background-color: var(--bg);
@@ -64,14 +64,14 @@ html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Smooth theme transitions */
+/* Transicion temas */
 * {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-duration: 0.3s;
   transition-timing-function: ease;
 }
 
-/* ── Noise texture overlay ── */
+/* Textura del overlay */
 body::before {
   content: '';
   position: fixed;
@@ -88,9 +88,7 @@ body::before {
   opacity: 0.6;
 }
 
-/* ══════════════════════════════════════════════
-   BACKGROUND BLOBS
-   ══════════════════════════════════════════════ */
+/* ILUMINACION FONDO */
 .blob {
   position: fixed;
   border-radius: 50%;
@@ -130,9 +128,7 @@ body::before {
   50%       { transform: translate(28px, 18px) scale(1.06); }
 }
 
-/* ══════════════════════════════════════════════
-   LAYOUT WRAPPER
-   ══════════════════════════════════════════════ */
+/* WRAPPER LAYOUT */
 .wrapper {
   position: relative;
   z-index: 1;
@@ -143,9 +139,7 @@ body::before {
   padding: 0 20px 70px;
 }
 
-/* ══════════════════════════════════════════════
-   HEADER
-   ══════════════════════════════════════════════ */
+/* HEADER */
 .header {
   width: 100%;
   max-width: 1000px;
@@ -195,7 +189,7 @@ body::before {
 
 .logo__accent { color: var(--accent); }
 
-/* Theme Toggle Button */
+/* Boton cambio de tema */
 .theme-toggle {
   position: relative;
   width: 44px;
@@ -237,7 +231,7 @@ body::before {
   transform: rotate(0deg) scale(1);
 }
 
-/* Light mode (sun visible) */
+/* Modo claro (sol visible) */
 [data-theme="light"] .theme-icon--sun {
   opacity: 1;
   transform: rotate(0deg) scale(1);
@@ -266,9 +260,7 @@ body::before {
   background: rgba(212, 165, 88, .1);
 }
 
-/* ══════════════════════════════════════════════
-   HERO
-   ══════════════════════════════════════════════ */
+/* HERO */
 .hero {
   text-align: center;
   margin-bottom: 46px;
@@ -296,9 +288,7 @@ body::before {
   font-weight: 300;
 }
 
-/* ══════════════════════════════════════════════
-   TRANSLATOR CARD
-   ══════════════════════════════════════════════ */
+/* BANDEJA TRADUCCION */
 .card {
   width: 100%;
   max-width: 1000px;
@@ -309,7 +299,7 @@ body::before {
   box-shadow: var(--shadow-card);
 }
 
-/* ── Language bar ── */
+/* Barra de idiomas */
 .lang-bar {
   display: flex;
   align-items: center;
@@ -319,13 +309,13 @@ body::before {
   gap: 16px;
 }
 
-/* Dropdown container */
+/* Contenedor dropdown */
 .dropdown {
   flex: 1;
   position: relative;
 }
 
-/* Dropdown trigger button */
+/* Boton dropdown */
 .dropdown-trigger {
   width: 100%;
   display: flex;
@@ -398,7 +388,7 @@ body::before {
   transition: opacity var(--transition-med), transform var(--transition-med);
 }
 
-/* Custom scrollbar for dropdown */
+/* Scroll custom dropdown */
 .dropdown-menu::-webkit-scrollbar {
   width: 6px;
 }
@@ -417,7 +407,7 @@ body::before {
   background: var(--text-muted);
 }
 
-/* Dropdown items */
+/* Items dropdown */
 .dropdown-item {
   width: 100%;
   display: block;
@@ -448,14 +438,14 @@ body::before {
   font-weight: 500;
 }
 
-/* Dropdown divider */
+/* Dropdown divisor */
 .dropdown-divider {
   height: 1px;
   background: var(--border);
   margin: 6px 0;
 }
 
-/* Swap button */
+/* Boton intercambiar idiomas */
 .swap-btn {
   flex-shrink: 0;
   width: 38px;
@@ -477,7 +467,7 @@ body::before {
   transform: rotate(180deg);
 }
 
-/* ── Text panels ── */
+/* Paneles de texto */
 .panels {
   display: grid;
   grid-template-columns: 1fr 1px 1fr;
@@ -493,7 +483,7 @@ body::before {
   flex-direction: column;
 }
 
-/* Textarea (input side) */
+/* Area de texto (input) */
 .panel__textarea {
   flex: 1;
   width: 100%;
@@ -514,7 +504,7 @@ body::before {
   color: var(--text-muted);
 }
 
-/* Output side */
+/* Output */
 .panel__output {
   flex: 1;
   padding: 26px 30px;
@@ -543,7 +533,7 @@ body::before {
   display: block;
 }
 
-/* Loading bar */
+/* Barra "cargando" */
 .loading-bar {
   height: 3px;
   width: 0;
@@ -565,7 +555,7 @@ body::before {
   100% { width: 0;   opacity: .4; }
 }
 
-/* Panel footer */
+/* Panel del footer */
 .panel__footer {
   display: flex;
   align-items: center;
@@ -585,7 +575,7 @@ body::before {
   align-items: center;
 }
 
-/* Icon buttons */
+/* Boton de iconoes */
 .icon-btn {
   width: 34px;
   height: 34px;
@@ -674,9 +664,7 @@ body::before {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ══════════════════════════════════════════════
-   KEYBOARD SHORTCUT HINT
-   ══════════════════════════════════════════════ */
+/* KEYBOARD SHORTCUT PISTA */
 .hint {
   text-align: center;
   font-size: 0.78rem;
@@ -694,9 +682,7 @@ kbd {
   font-size: 0.75rem;
 }
 
-/* ══════════════════════════════════════════════
-   QUICK PHRASES
-   ══════════════════════════════════════════════ */
+/* FRASES RAPIDAS */
 .quick-section {
   width: 100%;
   max-width: 1000px;
@@ -737,9 +723,7 @@ kbd {
   transform: translateY(-1px);
 }
 
-/* ══════════════════════════════════════════════
-   TOAST NOTIFICATION
-   ══════════════════════════════════════════════ */
+/* NOTIFICACIONES TOAST */
 .toast {
   position: fixed;
   bottom: 32px;
@@ -769,9 +753,7 @@ kbd {
   color: var(--error);
 }
 
-/* ══════════════════════════════════════════════
-   FOOTER
-   ══════════════════════════════════════════════ */
+/* FOOTER */
 .footer {
   margin-top: 56px;
   color: var(--text-muted);
@@ -784,9 +766,7 @@ kbd {
   font-weight: 500;
 }
 
-/* ══════════════════════════════════════════════
-   RESPONSIVE
-   ══════════════════════════════════════════════ */
+/* RESPONSIVE */
 @media (max-width: 680px) {
   .panels {
     grid-template-columns: 1fr;
