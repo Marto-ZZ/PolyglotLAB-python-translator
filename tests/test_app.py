@@ -13,6 +13,7 @@ def client():
     with app.test_client() as client:
         yield client
 
+
 # TESTS DE resolve_lang
 # funcion que convierte nombres de idioma a codigos ISO
 
@@ -49,3 +50,28 @@ class TestResolveLang:
         # el mapa es case-sensitive, "spanish" en minuscula no es valido
         with pytest.raises(ValueError):
             resolve_lang("spanish")
+
+
+# TESTS DEL ENDPOINT / health (devuelve el estado del servicio en JSON)
+
+class TestHealth:
+
+    def test_health_responde_ok(self, client):
+        res = client.get("/health")
+        assert res.status_code == 200
+
+    def test_health_devuelve_json_correcto(self, client):
+        res = client.get("/health")
+        data = res.get_json()
+        assert data["status"] == "ok"
+        assert data["service"] == "PolyglotLAB API"
+
+
+# TESTS DEL ENDPOINT (ruta raiz que devuelve el html)
+
+class TestIndex:
+
+    def test_index_carga_sin_error(self, client):
+        # la ruta raiz tiene que devolver 200 con el html
+        res = client.get("/")
+        assert res.status_code == 200
