@@ -75,3 +75,80 @@ class TestIndex:
         # la ruta raiz tiene que devolver 200 con el html
         res = client.get("/")
         assert res.status_code == 200
+
+# TESTS DEL ENDPOINT / translate (validaciones del payload)
+# estos no llaman a google, solo prueban que app.py valida bien el payload
+
+class TestTranslateValidaciones:
+
+    def test_sin_body_devuelve_400(self, client):
+        # mandar request sin JSON tiene que fallar con 400
+        res = client.post("/translate")
+        assert res.status_code == 400
+
+    def test_body_no_json_devuelve_400(self, client):
+        # mandar texto plano en vez de JSON tambien tiene que fallar
+        res = client.post("/translate", data="hola", content_type="text/plain")
+        assert res.status_code == 400
+
+    def test_texto_vacio_devuelve_400(self, client):
+        res = client.post("/translate", json={
+            "text": "",
+            "src_lang": "Spanish",
+            "tgt_lang": "English"
+        })
+        assert res.status_code == 400
+        assert "vacío" in res.get_json()["error"]
+
+    def test_texto_solo_espacios_devuelve_400(self, client):
+        # el .strip() del backend tiene que atrapar esto
+        res = client.post("/translate", json={
+            "text": "     ",
+            "src_lang": "Spanish",
+            "tgt_lang": "English"
+        })
+        assert res.status_code == 400
+
+    def test_texto_demasiado_largo_devuelve_400(self, client):
+        # 5001 caracteres tiene que superar el limite
+        res = client.post("/translate", json={
+            "text": "a" * 5001,
+            "src_lang": "Spanish",
+            "tgt_lang": "English"
+        })
+        assert res.status_code == 400
+        assert "5 000" in res.get_json()["error"]
+
+    def test_texto_en_el_limite_exacto_pasa(self, client):
+        # 5000 caracteres exactos tienen que pasar la validacion
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.return_value = "a" * 5000
+            res = client.post("/translate", json={
+                "text": "a" * 5000,
+                "src_lang": "Spanish",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 200
+
+    def test_idioma_origen_invalido_devuelve_400(self, client):
+        res = client.post("/translate", json={
+            "text": "hola",
+            "src_lang": "Klingon",
+            "tgt_lang": "English"
+        })
+        assert res.status_code == 400
+        assert "Klingon" in res.get_json()["error"]
+
+    def test_idioma_destino_invalido_devuelve_400(self, client):
+        res = client.post("/translate", json={
+            "text": "hola",
+            "src_lang": "Spanish",
+            "tgt_lang": "Martiano"
+        })
+        assert res.status_code == 400
+        assert "Martiano" in res.get_json()["error"]
+
+    def test_get_en_translate_devuelve_405(self, client):
+        # /translate solo acepta POST
+        res = client.get("/translate")
+        assert res.status_code == 405
