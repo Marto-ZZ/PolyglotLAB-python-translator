@@ -152,3 +152,62 @@ class TestTranslateValidaciones:
         # /translate solo acepta POST
         res = client.get("/translate")
         assert res.status_code == 405
+
+# TESTS DEL ENDPOINT /translate - traduccion exitosa (con mock)
+# Aca mock srive para no depender de internet ni de la API de google
+
+class TestTranslateExitoso:
+
+    def test_traduccion_basica(self, client):
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.return_value = "Hello"
+            res = client.post("/translate", json={
+                "text": "Hola",
+                "src_lang": "Spanish",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 200
+        assert res.get_json()["translation"] == "Hello"
+
+    def test_autodetectar_idioma(self, client):
+        # auto tiene que pasarse como source sin problema
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.return_value = "Good morning"
+            res = client.post("/translate", json={
+                "text": "Buenos dias",
+                "src_lang": "auto",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 200
+        assert "translation" in res.get_json()
+
+    def test_se_llama_con_los_codigos_correctos(self, client):
+        # verificar que resolve_lang esta siendo aplicado antes de llamar al traductor
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.return_value = "Bonjour"
+            client.post("/translate", json={
+                "text": "Hola",
+                "src_lang": "Spanish",
+                "tgt_lang": "French"
+            })
+        # tiene que haberse llamado con "es" y "fr", no con "Spanish" y "French"
+        mock_translator.assert_called_once_with(source="es", target="fr")
+
+    def test_src_lang_por_defecto_es_auto(self, client):
+        # si no se manda src_lang, el backend usa "auto" por defecto
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.return_value = "Hello"
+            res = client.post("/translate", json={
+                "text": "Hola",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 200
+
+    def test_tgt_lang_por_defecto_es_english(self, client):
+        # si no se manda tgt_lang, el backend usa "English" por defecto
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.return_value = "Hello"
+            res = client.post("/translate", json={
+                "text": "Hola"
+            })
+        assert res.status_code == 200
