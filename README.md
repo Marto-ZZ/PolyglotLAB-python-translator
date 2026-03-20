@@ -11,6 +11,8 @@ polyglotlab/
 ├── app.py           ← Backend principal en Flask
 ├── requirements.txt ← Dependencias del proyecto
 ├── README.md        ← Documentación
+├── tests/           ← Archivos de testeo de backend
+│   ├── test_app.py  ← Testeo de funciones principales del archivo app.py
 ├── static/          ← Archivos estáticos servidos automáticamente
 │   ├── styles.css   ← Estilos y diseño visual
 │   └── script.js    ← Lógica asíncrona del frontend y peticiones a la API
