@@ -211,3 +211,75 @@ class TestTranslateExitoso:
                 "text": "Hola"
             })
         assert res.status_code == 200
+
+# TESTS DEL ENDPOINT /translate - manejo de errores del traductor
+# simulamos que google falla para ver si app.py los atrapa bien
+
+class TestTranslateErrores:
+
+    def test_resultado_vacio_devuelve_502(self, client):
+        # si google devuelve None o string vacio, tiene que ser un 502
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.return_value = None
+            res = client.post("/translate", json={
+                "text": "Hola",
+                "src_lang": "Spanish",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 502
+
+    # si google tira una exception de idioma no soportado, el backend tiene que devolver 400 porque es un error del cliente (mandaron un idioma que google no soporta)
+    def test_language_not_supported_devuelve_400(self, client):
+        from deep_translator.exceptions import LanguageNotSupportedException
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.side_effect = LanguageNotSupportedException("xx")
+            res = client.post("/translate", json={
+                "text": "Hola",
+                "src_lang": "Spanish",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 400
+
+    def test_translation_not_found_devuelve_404(self, client):
+        from deep_translator.exceptions import TranslationNotFound
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.side_effect = TranslationNotFound("not found")
+            res = client.post("/translate", json={
+                "text": "Hola",
+                "src_lang": "Spanish",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 404
+
+    def test_request_error_devuelve_502(self, client):
+        from deep_translator.exceptions import RequestError
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.side_effect = RequestError()
+            res = client.post("/translate", json={
+                "text": "Hola",
+                "src_lang": "Spanish",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 502
+
+    def test_excepcion_generica_devuelve_500(self, client):
+        # cualquier error que no conocemos tiene que devolver 500
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.side_effect = Exception("boom")
+            res = client.post("/translate", json={
+                "text": "Hola",
+                "src_lang": "Spanish",
+                "tgt_lang": "English"
+            })
+        assert res.status_code == 500
+
+    def test_error_500_no_expone_detalle_interno(self, client):
+        # el mensaje de error no tiene que filtrar info del servidor
+        with patch("app.GoogleTranslator") as mock_translator:
+            mock_translator.return_value.translate.side_effect = Exception("detalle sensible del servidor")
+            res = client.post("/translate", json={
+                "text": "Hola",
+                "src_lang": "Spanish",
+                "tgt_lang": "English"
+            })
+        assert "detalle sensible" not in res.get_json()["error"]
