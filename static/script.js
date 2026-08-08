@@ -64,12 +64,12 @@ function getSavedTheme() {
   if (savedTheme) {
     return savedTheme;
   }
-  
+
   // Chequea preferencias del sistema si no hay tema guardado
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
     return 'light';
   }
-  
+
   return 'dark';
 }
 
@@ -141,7 +141,7 @@ function setOutput(text) {
   outputText.textContent = text;
   outputText.classList.toggle('panel__result--visible', !!text);
   outputPlaceholder.style.display = text ? 'none' : 'block';
-  outputCount.textContent = text ? `${text.length} caracteres` : '—';
+  outputCount.textContent = text ? `${text.length} characters` : '-';
 }
 
 /**
@@ -151,7 +151,7 @@ function setOutput(text) {
 function setLoading(loading) {
   translateBtn.disabled = loading;
   translateBtn.classList.toggle('translate-btn--loading', loading);
-  btnLabel.textContent = loading ? 'Traduciendo…' : 'Traducir';
+  btnLabel.textContent = loading ? 'Translating…' : 'Translate';
   loadingBar.classList.toggle('loading-bar--active', loading);
 }
 
@@ -165,10 +165,10 @@ function setLoading(loading) {
  */
 function toggleDropdown(trigger, menu) {
   const isOpen = menu.classList.contains('dropdown-menu--open');
-  
+
   // Cerrar todos los dropdowns primero
   closeAllDropdowns();
-  
+
   if (!isOpen) {
     menu.classList.add('dropdown-menu--open');
     trigger.setAttribute('aria-expanded', 'true');
@@ -190,18 +190,17 @@ function closeAllDropdowns() {
 /**
  * Selecciona un idioma del dropdown, actualiza el label y el estado seleccionado
  * @param {string} lang - Codigo del idioma
- * @param {string} flag - Emoji bandera
  * @param {HTMLElement} labelElement - Elemento del label a actualizar
  * @param {HTMLElement} menu - Dropdown menu
  */
-function selectLanguage(lang, flag, labelElement, menu) {
-  labelElement.textContent = `${flag} ${getLanguageName(lang)}`;
-  
+function selectLanguage(lang, labelElement, menu) {
+  labelElement.textContent = getLanguageName(lang);
+
   // Actualizar estado seleccionado en el dropdown
   menu.querySelectorAll('.dropdown-item').forEach(item => {
     item.classList.toggle('dropdown-item--selected', item.dataset.lang === lang);
   });
-  
+
   closeAllDropdowns();
 }
 
@@ -212,16 +211,16 @@ function selectLanguage(lang, flag, labelElement, menu) {
  */
 function getLanguageName(code) {
   const names = {
-    'auto': 'Detectar idioma',
-    'Spanish': 'Español',
-    'English': 'Inglés',
-    'French': 'Francés',
-    'Portuguese': 'Portugués',
-    'German': 'Alemán',
-    'Italian': 'Italiano',
-    'Japanese': 'Japonés',
-    'Chinese': 'Chino',
-    'Arabic': 'Árabe'
+    'auto': 'Detect language',
+    'Spanish': 'Spanish',
+    'English': 'English',
+    'French': 'French',
+    'Portuguese': 'Portuguese',
+    'German': 'German',
+    'Italian': 'Italian',
+    'Japanese': 'Japanese',
+    'Chinese': 'Chinese',
+    'Arabic': 'Arabic'
   };
   return names[code] || code;
 }
@@ -235,12 +234,11 @@ srcTrigger.addEventListener('click', (e) => {
 srcMenu.addEventListener('click', (e) => {
   const item = e.target.closest('.dropdown-item');
   if (!item) return;
-  
+
   const lang = item.dataset.lang;
-  const flag = item.dataset.flag;
-  
+
   srcLang = lang;
-  selectLanguage(lang, flag, srcLabel, srcMenu);
+  selectLanguage(lang, srcLabel, srcMenu);
 });
 
 // Target dropdown events
@@ -252,12 +250,11 @@ tgtTrigger.addEventListener('click', (e) => {
 tgtMenu.addEventListener('click', (e) => {
   const item = e.target.closest('.dropdown-item');
   if (!item) return;
-  
+
   const lang = item.dataset.lang;
-  const flag = item.dataset.flag;
-  
+
   tgtLang = lang;
-  selectLanguage(lang, flag, tgtLabel, tgtMenu);
+  selectLanguage(lang, tgtLabel, tgtMenu);
 });
 
 // Cierra dropdowns al hacer clic fuera de ellos
@@ -290,28 +287,16 @@ document.querySelectorAll('.dropdown-item').forEach(item => {
 
 swapBtn.addEventListener('click', () => {
   if (srcLang === 'auto') {
-    showToast('No se puede intercambiar con «Detectar idioma»', 'error');
+    showToast('Cannot swap while using "Detect language"', 'error');
     return;
   }
 
-  // Obtener las banderas actuales para srcLang y tgtLang
-  const srcFlag = srcMenu.querySelector(`[data-lang="${srcLang}"]`).dataset.flag;
-  const tgtFlag = tgtMenu.querySelector(`[data-lang="${tgtLang}"]`).dataset.flag;
-
-  // Intercambiar codigos y labels
+  // Intercambiar codigos
   [srcLang, tgtLang] = [tgtLang, srcLang];
-  
-  // Actualizar labels con banderas intercambiadas
-  srcLabel.textContent = `${srcFlag === '🇬🇧' ? tgtFlag : srcFlag} ${getLanguageName(srcLang)}`;
-  tgtLabel.textContent = `${tgtFlag === '🇬🇧' ? srcFlag : tgtFlag} ${getLanguageName(tgtLang)}`;
-  
-  // Actualizar estado seleccionado en los dropdowns
-  srcMenu.querySelectorAll('.dropdown-item').forEach(item => {
-    item.classList.toggle('dropdown-item--selected', item.dataset.lang === srcLang);
-  });
-  tgtMenu.querySelectorAll('.dropdown-item').forEach(item => {
-    item.classList.toggle('dropdown-item--selected', item.dataset.lang === tgtLang);
-  });
+
+  // Actualizar labels y estado seleccionado en los dropdowns
+  selectLanguage(srcLang, srcLabel, srcMenu);
+  selectLanguage(tgtLang, tgtLabel, tgtMenu);
 
   // Intercambiar texto visible
   const prevInput = inputText.value;
@@ -345,7 +330,7 @@ pasteBtn.addEventListener('click', async () => {
     updateCharCount();
     inputText.focus();
   } catch {
-    showToast('No se pudo acceder al portapapeles', 'error');
+    showToast('Could not access the clipboard', 'error');
   }
 });
 
@@ -357,12 +342,12 @@ pasteBtn.addEventListener('click', async () => {
 copyBtn.addEventListener('click', () => {
   const text = outputText.textContent;
   if (!text) {
-    showToast('No hay texto para copiar', 'error');
+    showToast('There is no text to copy', 'error');
     return;
   }
   navigator.clipboard.writeText(text).then(() => {
     copyBtn.classList.add('icon-btn--success');
-    showToast('✓ Copiado al portapapeles');
+    showToast('Copied to clipboard');
     setTimeout(() => copyBtn.classList.remove('icon-btn--success'), 1800);
   });
 });
@@ -371,11 +356,11 @@ copyBtn.addEventListener('click', () => {
 speakBtn.addEventListener('click', () => {
   const text = outputText.textContent;
   if (!text) {
-    showToast('No hay texto para reproducir', 'error');
+    showToast('There is no text to play', 'error');
     return;
   }
   if (!window.speechSynthesis) {
-    showToast('Tu navegador no soporta voz', 'error');
+    showToast('Your browser does not support speech playback', 'error');
     return;
   }
   speechSynthesis.cancel();
@@ -420,13 +405,13 @@ async function doTranslate() {
   const text = inputText.value.trim();
 
   if (!text) {
-    showToast('Escribe algo para traducir', 'error');
+    showToast('Write something to translate', 'error');
     inputText.focus();
     return;
   }
 
   if (srcLang !== 'auto' && srcLang === tgtLang) {
-    showToast('El idioma de origen y destino son iguales', 'error');
+    showToast('Source and target languages are the same', 'error');
     return;
   }
 
@@ -448,7 +433,7 @@ async function doTranslate() {
 
     if (!response.ok) {
       // El backend devolvio un error HTTP con mensaje
-      throw new Error(data.error || `Error del servidor (${response.status})`);
+      throw new Error(data.error || `Server error (${response.status})`);
     }
 
     setOutput(data.translation);
@@ -456,7 +441,7 @@ async function doTranslate() {
   } catch (err) {
     if (err.name === 'TypeError') {
       // Fallo de red, el servidor no esta corriendo
-      showToast('No se pudo conectar con el servidor. ¿Está corriendo app.py?', 'error', 4000);
+      showToast('Could not reach the server. Is app.py running?', 'error', 4000);
     } else {
       showToast(`Error: ${err.message}`, 'error', 4000);
     }
