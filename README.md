@@ -82,7 +82,7 @@ Abrí `index.html` en tu navegador directamente, o usá una extensión como **Li
 
 | | |
 |:---:|:---:|
-| ![](https://mir-s3-cdn-cf.behance.net/project_modules/fs/ca7f77254760593.6a8ce70307167.png) | ![](![https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/e751b6254760593.6a8ce70306a3d.png](image.png)) |
+| ![](https://mir-s3-cdn-cf.behance.net/project_modules/fs/ca7f77254760593.6a8ce70307167.png) | ![](https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/e751b6254760593.6a8ce70306a3d.png) |
 | ![](https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ee7b0b254760593.6a8ce70307df1.png) | ![](https://mir-s3-cdn-cf.behance.net/project_modules/fs/040b2f254760593.6a8ce70307800.png) |
  
 ---
