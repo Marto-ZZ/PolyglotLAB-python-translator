@@ -2,7 +2,7 @@
 
 Proyecto portfolio: traductor web estilo Google Translate, con frontend en **HTML/CSS/JS** y backend en **Python/Flask/deep-translator**.
 
-![PolyglotLAB preview](https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/35769e245748535.69b41180b593d.png)
+![PolyglotLAB preview](https://mir-s3-cdn-cf.behance.net/project_modules/fs/ca7f77254760593.6a8ce70307167.png)
 
 ---
 
