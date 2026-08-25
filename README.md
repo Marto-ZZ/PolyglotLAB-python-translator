@@ -82,8 +82,8 @@ Abrí `index.html` en tu navegador directamente, o usá una extensión como **Li
 
 | | |
 |:---:|:---:|
-| ![](https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/7a249f245748535.69b41180b9454.png) | ![](https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/167746245748535.69b41180b880b.png) |
-| ![](https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3b1687245748535.69bf1d123c321.gif) | ![](https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/908537245748535.69bf1d123bf4e.gif) |
+| ![](https://mir-s3-cdn-cf.behance.net/project_modules/fs/ca7f77254760593.6a8ce70307167.png) | ![](![https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/e751b6254760593.6a8ce70306a3d.png](image.png)) |
+| ![](https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ee7b0b254760593.6a8ce70307df1.png) | ![](https://mir-s3-cdn-cf.behance.net/project_modules/fs/040b2f254760593.6a8ce70307800.png) |
 
 ---
 
