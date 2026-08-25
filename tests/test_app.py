@@ -4,7 +4,6 @@ import pytest
 from unittest.mock import patch
 from app import app, resolve_lang
 
-
 # Fixture principal
 
 # cliente de prueba que simula requests HTTP sin levantar el servidor real
@@ -76,7 +75,6 @@ class TestIndex:
         # la ruta raiz tiene que devolver 200 con el html
         res = client.get("/")
         assert res.status_code == 200
-
 
 # TESTS DEL ENDPOINT / translate (validaciones del payload)
 # estos no llaman a google, solo prueban que app.py valida bien el payload
@@ -155,7 +153,6 @@ class TestTranslateValidaciones:
         res = client.get("/translate")
         assert res.status_code == 405
 
-
 # TESTS DEL ENDPOINT /translate - traduccion exitosa (con mock)
 # Aca mock srive para no depender de internet ni de la API de google
 
@@ -214,7 +211,6 @@ class TestTranslateExitoso:
                 "text": "Hola"
             })
         assert res.status_code == 200
-
 
 # TESTS DEL ENDPOINT /translate - manejo de errores del traductor
 # simulamos que google falla para ver si app.py los atrapa bien

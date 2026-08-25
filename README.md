@@ -13,6 +13,8 @@ polyglotlab/
 ├── app.py           ← Backend principal en Flask
 ├── requirements.txt ← Dependencias del proyecto
 ├── README.md        ← Documentación
+├── tests/           ← Archivos de testeo de backend
+│   ├── test_app.py  ← Testeo de funciones principales del archivo app.py
 ├── static/          ← Archivos estáticos servidos automáticamente
 │   ├── styles.css   ← Estilos y diseño visual
 │   └── script.js    ← Lógica asíncrona del frontend y peticiones a la API
@@ -81,6 +83,7 @@ Abrí `index.html` en tu navegador directamente, o usá una extensión como **Li
 | | |
 |:---:|:---:|
 | ![](https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/7a249f245748535.69b41180b9454.png) | ![](https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/167746245748535.69b41180b880b.png) |
+| ![](https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3b1687245748535.69bf1d123c321.gif) | ![](https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/908537245748535.69bf1d123bf4e.gif) |
 
 ---
 
